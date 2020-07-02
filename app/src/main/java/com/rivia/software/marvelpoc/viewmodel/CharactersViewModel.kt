@@ -16,7 +16,7 @@ import org.w3c.dom.CharacterData
 
 class CharactersViewModel(val getCharactersUseCase: GetCharactersUseCase): ViewModel() {
 
-    val detailViewState: LiveData<MarvelViewResult<List<CharacterListResponse>,ErrorResponse>>
+    val charactersLiveData: LiveData<MarvelViewResult<List<CharacterListResponse>,ErrorResponse>>
         get() = _getCharactersViewState
 
     private var _getCharactersViewState = MutableLiveData<MarvelViewResult<List<CharacterListResponse>,ErrorResponse>>()
