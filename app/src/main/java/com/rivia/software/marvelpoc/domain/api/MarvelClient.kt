@@ -1,8 +1,9 @@
-package com.rivia.software.marvelpoc.model.api
+package com.rivia.software.marvelpoc.domain.api
 
 import android.annotation.SuppressLint
 import android.util.Log
 import com.google.gson.*
+import com.rivia.software.marvelpoc.utils.MarvelApiConstants.MARVEL_DOMAIN
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,14 +19,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MarvelClient {
-    companion object {
-        const val DEFAULT_BASE_URL = "https://gateway.marvel.com/"
-    }
 
     private lateinit var retrofitBuilder: Retrofit.Builder
 
     constructor() {
-        initApiClient(DEFAULT_BASE_URL)
+        initApiClient(MARVEL_DOMAIN)
     }
 
     constructor(baseUrl: String, datePattern: String = "yyyy-MM-dd'T'HH:mm:ss") {
@@ -125,7 +123,7 @@ class MarvelClient {
         override fun stringConverter(
             type: Type,
             annotations: Array<Annotation>?,
-            retrofit: Retrofit?
+            retrofit: Retrofit
         ): Converter<Any, String>? {
             for (annotation in annotations!!) {
                 if (annotation is Query) {
@@ -136,7 +134,7 @@ class MarvelClient {
                     // reference to it explicitly as a field.
                     val delegate = delegateFactory
                         .requestBodyConverter(type, annotations, arrayOfNulls(0), retrofit)
-                    return DelegateToStringConverter<Any>((delegate as Converter<Any, RequestBody>?)!!)
+                    return DelegateToStringConverter((delegate as Converter<Any, RequestBody>?)!!)
                 }
             }
             return null
