@@ -1,5 +1,6 @@
 package com.rivia.software.marvelpoc.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.w3c.dom.CharacterData
 
-class CharactersViewModel(val getCharactersUseCase: GetCharactersUseCase): ViewModel() {
+class CharactersViewModel @ViewModelInject constructor(val getCharactersUseCase: GetCharactersUseCase): ViewModel() {
 
     val charactersLiveData: LiveData<MarvelViewResult<List<CharacterListResponse>,ErrorResponse>>
         get() = _getCharactersViewState

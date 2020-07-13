@@ -17,7 +17,7 @@ class MarvelRepository(private val marvelAPI: MarvelApi) : IMarvelRepository{
 
     override suspend fun getCharacters(charactersRequest: GetCharactersRequest): Flow<MarvelApiResult<CharacterData, ErrorResponse>> {
         val ts = System.currentTimeMillis().toString()
-        val response = marvelAPI.getCharacters(ts,MARVEL_PUBLIC_KEY,generateHash(),charactersRequest.nameStartWith,charactersRequest.offset,charactersRequest.limit)
+        val response = marvelAPI.getCharacters(ts,MARVEL_PUBLIC_KEY,generateHash(ts),charactersRequest.nameStartWith,charactersRequest.offset,charactersRequest.limit)
         return flow{
             if(response.isSuccessful) {
                 this.emit(MarvelApiResult.Success(response.body()))
