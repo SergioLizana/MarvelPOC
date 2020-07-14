@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rivia.software.marvelpoc.utils.getViewModel
 import com.rivia.software.marvelpoc.R
+import com.rivia.software.marvelpoc.databinding.ActivityMainBinding
 import com.rivia.software.marvelpoc.domain.api.MarvelApi
 import com.rivia.software.marvelpoc.domain.api.MarvelClient
 import com.rivia.software.marvelpoc.domain.models.request.GetCharactersRequest
@@ -18,25 +19,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val vm: CharactersViewModel by viewModels()
 
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_MarvelPOC)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        vm.getCharacters(GetCharactersRequest())
-
-        vm.charactersLiveData.observe(this, Observer {
-            when (it) {
-                is MarvelViewResult.Success -> {
-                    Log.d("test", "hello")
-                }
-                else -> {
-                    Log.d("test", "error")
-                }
-            }
-
-        })
-
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

@@ -6,10 +6,11 @@ import com.rivia.software.marvelpoc.domain.models.response.CharacterData
 import com.rivia.software.marvelpoc.domain.repository.MarvelRepository
 import com.rivia.software.marvelpoc.view.data.ErrorResponse
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 typealias GetCharacterBaseUseCase = BaseUseCase<GetCharactersRequest, Flow<MarvelApiResult<CharacterData, ErrorResponse>>>
 
-class GetCharactersUseCase(private val marvelRepository: MarvelRepository): GetCharacterBaseUseCase {
+class GetCharactersUseCase @Inject constructor(private val marvelRepository: MarvelRepository): GetCharacterBaseUseCase {
 
     override suspend fun invoke(params: GetCharactersRequest): Flow<MarvelApiResult<CharacterData, ErrorResponse>> {
         return marvelRepository.getCharacters(params)

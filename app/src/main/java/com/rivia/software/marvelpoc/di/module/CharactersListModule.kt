@@ -9,10 +9,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.components.FragmentComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
-class MainActivityModule {
+@InstallIn(FragmentComponent::class)
+class CharactersListModule {
 
     @Provides
     fun mainViewModelProvider(useCase: GetCharactersUseCase) = CharactersViewModel(useCase)
@@ -22,5 +25,6 @@ class MainActivityModule {
         GetCharactersUseCase(marvelApiRepository)
 
     @Provides
-    fun getApiRepository() = MarvelRepository(MarvelClient().createService(MarvelApi::class.java))
+    fun getApiRepositoryProvider(marvelApi: MarvelApi) = MarvelRepository(marvelApi)
+
 }

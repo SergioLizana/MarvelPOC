@@ -12,8 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class MarvelRepository(private val marvelAPI: MarvelApi) : IMarvelRepository{
+class MarvelRepository @Inject constructor(private val marvelAPI: MarvelApi) : IMarvelRepository{
 
     override suspend fun getCharacters(charactersRequest: GetCharactersRequest): Flow<MarvelApiResult<CharacterData, ErrorResponse>> {
         val ts = System.currentTimeMillis().toString()

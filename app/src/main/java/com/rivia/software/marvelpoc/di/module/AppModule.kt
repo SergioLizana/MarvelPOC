@@ -10,6 +10,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -20,16 +23,9 @@ class AppModule {
 
     @Provides
     @Singleton
-    @Named("publicApiKey")
-    fun publicApiKeyProvider(app: MarvelApplication): String = MARVEL_PUBLIC_KEY
+    fun provideApiService(marvelClient: MarvelClient): MarvelApi = marvelClient.createService(MarvelApi::class.java)
 
     @Provides
     @Singleton
-    @Named("privateApiKey")
-    fun privateApiKeyProvider(app: MarvelApplication): String = MARVEL_PRIVATE_KEY
-
-  /*   @Provides
-     @Singleton
-     fun apiProvider(): MarvelApi =  MarvelClient().createService(MarvelApi::class.java)
-*/
+    fun provideClient(): MarvelClient = MarvelClient()
 }
